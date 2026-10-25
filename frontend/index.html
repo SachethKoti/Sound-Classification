@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sound Classifier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <h1>What is that sound?</h1>
+      <p>Upload a short recording. A pretrained AI model listens to it and names the most likely sound.</p>
+    </header>
+
+    <div class="layout">
+      <!-- LEFT: upload -->
+      <section class="panel" aria-labelledby="upload-title">
+        <h2 id="upload-title">1. Your audio</h2>
+
+        <label id="dropzone" class="dropzone" tabindex="0">
+          <input id="fileInput" type="file" accept=".wav,.mp3,.flac,.ogg,.m4a,.aac,.webm,audio/*" hidden />
+          <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
+            <g fill="currentColor"><rect x="4" y="16" width="4" height="8" rx="2"/><rect x="11" y="10" width="4" height="20" rx="2"/><rect x="18" y="4" width="4" height="32" rx="2"/><rect x="25" y="12" width="4" height="16" rx="2"/><rect x="32" y="17" width="4" height="6" rx="2"/></g>
+          </svg>
+          <strong>Drop an audio file here</strong>
+          <span>or click to browse &middot; WAV, MP3, FLAC, OGG, M4A &middot; up to 25 MB</span>
+        </label>
+
+        <div id="fileCard" class="file-card" hidden>
+          <canvas id="wave" width="640" height="110" aria-label="Waveform of the uploaded audio"></canvas>
+          <dl class="file-meta">
+            <div><dt>File</dt><dd id="fileName">-</dd></div>
+            <div><dt>Duration</dt><dd id="fileDuration">-</dd></div>
+            <div><dt>Size</dt><dd id="fileSize">-</dd></div>
+          </dl>
+          <audio id="player" controls></audio>
+        </div>
+
+        <p id="clientError" class="error" role="alert" hidden></p>
+
+        <button id="predictBtn" class="btn" disabled>
+          <span class="btn-label">Predict Sound</span>
+          <span class="spinner" aria-hidden="true"></span>
+        </button>
+      </section>
+
+      <!-- RIGHT: results -->
+      <section class="panel result-panel" aria-labelledby="result-title" aria-live="polite">
+        <h2 id="result-title">2. What the model heard</h2>
+
+        <div id="empty" class="empty">
+          <p>Results will appear here after you choose a file and press <b>Predict Sound</b>.</p>
+        </div>
+
+        <div id="result" hidden>
+          <p class="small">Most likely sound</p>
+          <p id="predLabel" class="pred-label">-</p>
+          <div class="conf">
+            <div class="conf-head"><span>Confidence</span><b id="predConf">0%</b></div>
+            <div class="bar"><i id="predBar"></i></div>
+          </div>
+
+          <p id="warning" class="warning" hidden></p>
+
+          <h3>Top 3 predictions</h3>
+          <ol id="topList" class="top-list"></ol>
+
+          <p id="resultNote" class="small note"></p>
+        </div>
+      </section>
+    </div>
+
+    <footer class="foot">
+      <p>The model recognises a fixed set of sound classes (it does not know every possible sound). Scores are per-class likelihoods, so they do not add up to 100%. If the confidence is low, the sound may be outside what it was trained on.</p>
+    </footer>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>
