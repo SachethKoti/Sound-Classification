@@ -1,3 +1,4 @@
+
 # Environmental Sound Classifier (pretrained model, no training)
 
 Upload an audio file -> validate -> preprocess -> pretrained model -> predicted sound,
@@ -60,3 +61,7 @@ API docs are at http://127.0.0.1:8000/docs . Health check: `/api/health`.
 * Use a different pretrained model: set the environment variable `MODEL_ID` to another
   AST audio-classification checkpoint from the Hugging Face Hub (e.g. one fine-tuned on ESC-50).
   The code reads labels from the model, so no other changes are needed.
+
+# Sound-Classification
+predicts the sound based on the input sound file
+ eae49893f5cb182c11733e82a8358b64c9eb71ae
